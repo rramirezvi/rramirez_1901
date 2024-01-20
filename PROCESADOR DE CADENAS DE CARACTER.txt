@@ -1,0 +1,48 @@
+/*  PROCESADOR DE CADENAS DE CARACTERES
+
+Proceso ProcesarCadena(cadena)
+    longitud = Longitud(cadena)
+
+    Si longitud MOD 2 = 0 Entonces
+        mitad = longitud / 2
+        nuevaCadena = Subcadena(cadena, mitad, longitud) + Subcadena(cadena, 0, mitad)
+        Mostrar "Cadena:", cadena
+        Mostrar "Resultado:", nuevaCadena
+    Sino
+        Mostrar "La cadena ingresada tiene una longitud impar."
+        Mostrar "Longitud:", longitud
+    Fin Si
+Fin Proceso
+
+ProcesarCadena("casarota")
+Mostrar "------------------------"
+ProcesarCadena("playaSalinas")
+*/
+package algoritmo_1;
+
+
+public class Algoritmo_2 {
+    
+    public static void main(String[] args) {
+        String cadena1 = "casarota";
+        String cadena2 = "playaSalinas";
+
+        procesarCadena(cadena1);
+        System.out.println("------------------------");
+        procesarCadena(cadena2);
+    }
+
+    public static void procesarCadena(String cadena) {
+        int longitud = cadena.length();
+
+        if (longitud % 2 == 0) {  // Longitud par
+            int mitad = longitud / 2;
+            String nuevaCadena = cadena.substring(mitad) + cadena.substring(0, mitad);
+            System.out.println("Cadena: " + cadena);
+            System.out.println("Resultado: " + nuevaCadena);
+        } else {  // Longitud impar
+            System.out.println("La cadena ingresada tiene una longitud impar.");
+            System.out.println("Longitud: " + longitud);
+        }
+    }
+}

@@ -1,0 +1,118 @@
+/* PROCESADOR DE PLACAS
+Procedimiento principal()
+    provinciaParametro = "Santa Elena"
+    tipoParametro = "Vehículos de uso oficial"
+    numeroBloques = 5
+
+    placasGeneradas = generarPlacas(provinciaParametro, tipoParametro, numeroBloques)
+
+    Para cada placa en placasGeneradas
+        Imprimir placa
+    Fin Para
+Fin Procedimiento
+
+Función generarPlacas(provincia, tipo, nBloques)
+    letrasProvincia = valor guardado en los mapas
+    letrasTipo = valor guardado en los mapas
+
+    placas = []
+
+    Para i desde 1 hasta nBloques
+        provinciaLetra = letrasProvincia.obtenerValorPredeterminado(provincia, "P")
+        tipoLetras = letrasTipo.obtenerValorPredeterminado(tipo, ['C'])
+        tipoLetra = tipoLetras.obtenerElementoAleatorio()
+
+        numeroEntero1 = GenerarNumeroAleatorioEntre(3, 9)
+        numeroEntero2 = GenerarNumeroAleatorioEntre(0, 9)
+        numeroEntero3 = GenerarNumeroAleatorioEntre(0, 9)
+        numeroEntero4 = GenerarNumeroAleatorioEntre(0, 9)
+
+        placa = Concatenar(provinciaLetra, tipoLetra, numeroEntero1, "-", numeroEntero2, numeroEntero3, numeroEntero4)
+        placas.agregarElemento(placa)
+    Fin Para
+
+    Devolver placas
+Fin Función
+
+Función GenerarNumeroAleatorioEntre(min, max)
+    Devolver NúmeroAleatorioEntre(min, max)
+Fin Función
+
+
+*/
+
+
+package algoritmo_1;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Random;
+
+/**
+ *
+ * @author USER
+ */
+public class Algoritmo_1 {
+
+   public static void main(String[] args) {
+       
+        String provinciaParametro = "Santa Elena";
+        String tipoParametro = "Vehículos de uso oficial";
+        int numeroBloques = 5;
+
+         // Llamamos al metodo y pasamos los parametros para que se llene el arreglo
+        String[] placasGeneradas = generarPlacas(provinciaParametro, tipoParametro, numeroBloques);
+
+            //recorremos el arreglo y lo pintamos
+        for (String placa : placasGeneradas) {
+            System.out.println(placa);
+        }
+    }
+    
+   
+    public static String[] generarPlacas(String provincia, String tipo, int nBloques) {
+        //utilizando mapas para mapear las letras correspondientes a la provincia y al tipo de vehículo
+        //Mapas provincias
+        Map<String, String> letrasProvincia = new HashMap<>();
+        letrasProvincia.put("Guayas", "G");
+        letrasProvincia.put("Pichincha", "P");
+        letrasProvincia.put("Manabi", "M");
+        letrasProvincia.put("Azuay", "A");
+        letrasProvincia.put("Santa Elena", "Y");
+        letrasProvincia.put("Loja", "L");
+        letrasProvincia.put("El Oro", "O");
+        letrasProvincia.put("Napo", "N");
+        letrasProvincia.put("Orellana", "Q");
+        letrasProvincia.put("Carchi", "C");
+
+        //Mapas Vehiculos
+        Map<String, char[]> letrasTipo = new HashMap<>();
+        letrasTipo.put("Vehículos comerciales (taxis o autobuses)", new char[]{'A', 'U', 'Z'});
+        letrasTipo.put("Vehículos gubernamentales", new char[]{'E'});
+        letrasTipo.put("Vehículos de uso oficial", new char[]{'X'});
+
+        // se crea un arreglo del tamño porporcionado por la variable nBloques
+        String[] placas = new String[nBloques];
+
+        //recorremos el arreglo para llenarlo
+        for (int i = 0; i < nBloques; i++) {
+            // mediante el metodo getOrDefault de la interfaz Map  se obtene el valor asociado a la clave
+            String provinciaLetra = letrasProvincia.getOrDefault(provincia, "P");
+            char[] tipoLetras = letrasTipo.getOrDefault(tipo, new char[]{'C'});
+             
+            //Se elige aleatoriamente una letra del tipo de vehículo.
+            char tipoLetra = tipoLetras[new Random().nextInt(tipoLetras.length)];
+            
+            //Generación de números enteros aleatorios:
+            int numeroEntero1 = new Random().nextInt(7) + 3; // Números entre 3 y 9
+            int numeroEntero2 = new Random().nextInt(10);
+            int numeroEntero3 = new Random().nextInt(10);
+            int numeroEntero4 = new Random().nextInt(10);
+            
+            //Se construye la placa concatenando las letras de provincia y tipo, y los números enteros generados.
+            placas[i] = String.format("%s%c%d-%d%d%d", provinciaLetra, tipoLetra, numeroEntero1, numeroEntero2, numeroEntero3, numeroEntero4);
+        }
+
+        return placas;
+}
+}
